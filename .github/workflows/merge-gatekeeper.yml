@@ -8,6 +8,13 @@ on:
       - master
 
 jobs:
+  check:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Set up Go tip
+        run: |
+          echo ${{ github.event.pull_request.head.sha || github.event.push.head.sha }}
+
   merge-gatekeeper:
     runs-on: ubuntu-latest
     steps:
