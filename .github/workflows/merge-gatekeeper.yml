@@ -6,6 +6,10 @@ on:
     branches:
       - main
       - master
+  push:
+    branches:
+      - main
+      - master
 
 jobs:
   check:
@@ -14,6 +18,8 @@ jobs:
       - name: Set up Go tip
         run: |
           echo ${{ github.event.pull_request.head.sha || github.event.push.head.sha }}
+          echo ${{ github.event.pull_request.head.sha }}
+          echo ${{ github.event.push.head.sha }}
 
   merge-gatekeeper:
     runs-on: ubuntu-latest
