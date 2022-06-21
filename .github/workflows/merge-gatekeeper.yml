@@ -1,0 +1,33 @@
+---
+name: Merge Gatekeeper
+
+on:
+  pull_request:
+    branches:
+      - main
+      - master
+  push:
+    branches:
+      - main
+      - master
+
+jobs:
+  check:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Set up Go tip
+        run: |
+          echo ${{ github.event.pull_request.head.sha || github.event.push.head.sha }}
+          echo ${{ github.event.pull_request.head.sha }}
+          echo ${{ github.event.push.head.sha }}
+          echo ${{ github.event.push.sha }}
+          echo ${{ github.sha }}
+
+  merge-gatekeeper:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run Merge Gatekeeper
+        uses: upsidr/merge-gatekeeper@main
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          ref: ${{ github.event.pull_request.head.sha || github.event.push.head.sha }}
