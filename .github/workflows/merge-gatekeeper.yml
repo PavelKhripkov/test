@@ -20,6 +20,7 @@ jobs:
           echo ${{ github.event.pull_request.head.sha || github.event.push.head.sha }}
           echo ${{ github.event.pull_request.head.sha }}
           echo ${{ github.event.push.head.sha }}
+          echo ${{ github.event.push.sha }}
 
   merge-gatekeeper:
     runs-on: ubuntu-latest
