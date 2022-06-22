@@ -30,4 +30,4 @@ jobs:
         uses: upsidr/merge-gatekeeper@main
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          ref: ${{ github.event.pull_request.head.sha || github.event.push.head.sha }}
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
