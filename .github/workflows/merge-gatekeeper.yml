@@ -23,6 +23,16 @@ jobs:
           echo ${{ github.event.push.sha }}
           echo ${{ github.sha }}
 
+      - name: pull_request
+        if ${{ github.event == 'pull_request' }}
+        run: |
+          echo pull_request
+
+      - name: push
+        if ${{ github.event == 'push' }}
+        run: |
+          echo push
+
   merge-gatekeeper:
     runs-on: ubuntu-latest
     steps:
