@@ -2,14 +2,11 @@
 name: Merge Gatekeeper
 
 on:
-  pull_request:
-    branches:
-      - main
-      - master
   push:
     branches:
-      - main
       - master
+      - release-*
+  pull_request:
 
 jobs:
   check:
@@ -23,11 +20,21 @@ jobs:
           echo ${{ github.event.push.sha }}
           echo ${{ github.sha }}
 
+      - name: pull_request
+        if: ${{ github.event_name == 'pull_request' }}
+        run: |
+          echo pull_request
+
+      - name: push
+        if: ${{ github.event_name == 'push' }}
+        run: |
+          echo push
+
   merge-gatekeeper:
+    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - name: Run Merge Gatekeeper
-        uses: upsidr/merge-gatekeeper@main
+        uses: percona-platform/merge-gatekeeper@v1.0.2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          ref: ${{ github.event.pull_request.head.sha || github.event.push.head.sha }}
