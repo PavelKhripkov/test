@@ -31,10 +31,18 @@ jobs:
           echo push
 
   merge-gatekeeper:
-    if: github.event_name == 'pull_request'
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
     steps:
       - name: Run Merge Gatekeeper
         uses: percona-platform/merge-gatekeeper@v1.0.2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+
+  notify:
+    needs: [merge-gatekeeper]
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Set up Go tip
+        run: |
+          echo Notified
