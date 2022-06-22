@@ -23,7 +23,7 @@ jobs:
       - name: pull_request
         if: ${{ github.event_name == 'pull_request' }}
         run: |
-          pull_request
+          echo pull_request
 
       - name: push
         if: ${{ github.event_name == 'push' }}
