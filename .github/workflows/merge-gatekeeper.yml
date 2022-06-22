@@ -24,12 +24,12 @@ jobs:
           echo ${{ github.sha }}
 
       - name: pull_request
-        if ${{ github.event == 'pull_request' }}
+        if: ${{ github.event_name == 'pull_request' }}
         run: |
           echo pull_request
 
       - name: push
-        if ${{ github.event == 'push' }}
+        if: ${{ github.event_name == 'push' }}
         run: |
           echo push
 
