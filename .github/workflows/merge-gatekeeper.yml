@@ -23,7 +23,7 @@ jobs:
       - name: pull_request
         if: ${{ github.event_name == 'pull_request' }}
         run: |
-          echo pull_request
+          pull_request
 
       - name: push
         if: ${{ github.event_name == 'push' }}
@@ -31,6 +31,7 @@ jobs:
           echo push
 
   merge-gatekeeper:
+    needs: [check]
     runs-on: ubuntu-latest
     steps:
       - name: Run Merge Gatekeeper
@@ -40,10 +41,19 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
 
-  notify:
+  notify_fail:
+    if: ${{ failure() }}
     needs: [merge-gatekeeper]
     runs-on: ubuntu-22.04
     steps:
       - name: Set up Go tip
         run: |
-          echo Notified
+          echo Failure
+
+  notify_success:
+    needs: [merge-gatekeeper]
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Set up Go tip
+        run: |
+          echo Success
