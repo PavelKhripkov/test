@@ -38,8 +38,7 @@ jobs:
         uses: percona-platform/merge-gatekeeper@v1.0.2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Skip Merge Gatekeeper
-        if: github.event_name == 'pull_request'
+
 
   notify:
     needs: [merge-gatekeeper]
