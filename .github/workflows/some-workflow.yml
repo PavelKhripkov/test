@@ -14,7 +14,7 @@ jobs:
     steps:
       - name: Set up Go tip
         run: |
-          sleep 60
+          sleep 1
 
   another_check:
     needs: [check]
@@ -22,5 +22,4 @@ jobs:
     steps:
       - name: Set up Go tip 2
         run: |
-          sleep 60
-          test
+          sleep 1
