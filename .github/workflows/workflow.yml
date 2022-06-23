@@ -41,7 +41,7 @@ jobs:
 
 
   notify_fail:
-    if: ${{ failure() }}
+    if: ${{ always() }}
     needs: [merge-gatekeeper]
     runs-on: ubuntu-22.04
     steps:
@@ -49,12 +49,3 @@ jobs:
         run: |
           sleep 60
           echo Failure
-
-  notify_success:
-    needs: [merge-gatekeeper]
-    runs-on: ubuntu-22.04
-    steps:
-      - name: Set up Go tip
-        run: |
-          sleep 60
-          echo Success
