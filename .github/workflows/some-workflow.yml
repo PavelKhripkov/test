@@ -1,0 +1,25 @@
+---
+name: Some workflow
+
+on:
+  push:
+    branches:
+      - master
+      - release-*
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Set up Go tip
+        run: |
+          sleep 1
+
+  another_check:
+    needs: [check]
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Set up Go tip 2
+        run: |
+          sleep 1
