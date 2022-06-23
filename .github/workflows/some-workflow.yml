@@ -1,23 +1,23 @@
----
-name: Some workflow
-
-on:
-  push:
-    branches:
-      - master
-      - release-*
-  pull_request:
-
-jobs:
-  check:
-    runs-on: ubuntu-22.04
-    steps:
-      - name: Set up Go tip
-        run: |
-          sleep 5
-          test
-          echo ${{ github.event.pull_request.head.sha || github.event.push.head.sha }}
-          echo ${{ github.event.pull_request.head.sha }}
-          echo ${{ github.event.push.head.sha }}
-          echo ${{ github.event.push.sha }}
-          echo ${{ github.sha }}
+#---
+#name: Some workflow
+#
+#on:
+#  push:
+#    branches:
+#      - master
+#      - release-*
+#  pull_request:
+#
+#jobs:
+#  check:
+#    runs-on: ubuntu-22.04
+#    steps:
+#      - name: Set up Go tip
+#        run: |
+#          sleep 5
+#          test
+#          echo ${{ github.event.pull_request.head.sha || github.event.push.head.sha }}
+#          echo ${{ github.event.pull_request.head.sha }}
+#          echo ${{ github.event.push.head.sha }}
+#          echo ${{ github.event.push.sha }}
+#          echo ${{ github.sha }}
