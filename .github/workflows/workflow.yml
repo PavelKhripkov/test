@@ -39,7 +39,7 @@ jobs:
         uses: percona-platform/merge-gatekeeper@v1.0.2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          ref: ${{ github.event.pull_request.head.sha || github.event.push.head.sha }}
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
 
 
   notify_fail:
