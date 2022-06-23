@@ -43,7 +43,7 @@ jobs:
 
   notify_fail:
     if: ${{ failure() }}
-    needs: [merge-gatekeeper]
+    needs: [check]
     runs-on: ubuntu-22.04
     steps:
       - name: Set up Go tip
@@ -52,7 +52,7 @@ jobs:
           echo Failure
 
   notify_success:
-    needs: [merge-gatekeeper]
+    needs: [check]
     runs-on: ubuntu-22.04
     steps:
       - name: Set up Go tip
