@@ -1,0 +1,56 @@
+---
+name: Go-tip
+
+on:
+  schedule:
+    - cron: "0 13 * * 0"
+
+jobs:
+  check:
+    name: Checks
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Check out code into the working directory under the GOPATH
+        run: echo Worked!
+
+
+  workflow_success:
+    needs: [check]
+    name: Slack Notification success
+    runs-on: ubuntu-22.04
+    env:
+      SLACK_WEBHOOK: ${{ secrets.SLACK_TOKEN_PMM_CI }}
+      SLACK_CHANNEL: "pmm-ci"
+      SLACK_USERNAME: "PR pipelines bot"
+      SLACK_ICON_EMOJI: ":chestnut:"
+      SLACK_COLOR: "#00FF00"
+      SLACK_TITLE: "Finished ${{ github.event.repository.name }} workflow"
+      SLACK_MESSAGE: "${{ github.event.inputs.repo || github.repository }}:${{ github.event.inputs.branch || github.head_ref }}"
+
+    steps:
+#      - uses: percona-platform/checkout@v3
+#      - uses: percona-platform/setup-node@v2
+      - name: Slack Notification
+        run: echo Success
+#        uses: percona-platform/action-slack-notify@v2
+
+  workflow_failure:
+    if: ${{ failure() }}
+    needs: [check]
+    name: Slack Notification failure
+    runs-on: ubuntu-22.04
+    env:
+      SLACK_WEBHOOK: ${{ secrets.SLACK_TOKEN_PMM_CI }}
+      SLACK_CHANNEL: "pmm-ci"
+      SLACK_USERNAME: "PR pipelines bot"
+      SLACK_ICON_EMOJI: ":chestnut:"
+      SLACK_COLOR: "#FF0000"
+      SLACK_TITLE: "Finished ${{ github.event.repository.name }} workflow"
+      SLACK_MESSAGE: "Workflow failed: ${{ github.event.inputs.repo || github.repository }}:${{ github.event.inputs.branch || github.head_ref }}"
+
+    steps:
+#      - uses: percona-platform/checkout@v3
+      - name: Slack Notification
+        run: echo Failure
+#        uses: percona-platform/action-slack-notify@v2
