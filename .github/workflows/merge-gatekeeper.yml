@@ -33,6 +33,7 @@ jobs:
 
   merge-gatekeeper:
     needs: [check]
+    if: github.event_name == 'pull_request' && ${{ always() }}
     runs-on: ubuntu-latest
     steps:
       - name: Run Merge Gatekeeper
