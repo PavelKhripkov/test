@@ -3,7 +3,7 @@ name: Go-tip
 
 on:
   schedule:
-    - cron: "*/5 * * * *"
+    - cron: '* * * * *'
 
 jobs:
   check:
