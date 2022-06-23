@@ -1,5 +1,5 @@
 ---
-name: Merge Gatekeeper
+name: Workflow
 
 on:
   push:
@@ -32,10 +32,10 @@ jobs:
 
   merge-gatekeeper:
     needs: [check]
+    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - name: Run Merge Gatekeeper
-        if: github.event_name == 'push'
         uses: percona-platform/merge-gatekeeper@v1.0.2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -43,7 +43,7 @@ jobs:
 
   notify_fail:
     if: ${{ failure() }}
-    needs: [merge-gatekeeper]
+    needs: [check]
     runs-on: ubuntu-22.04
     steps:
       - name: Set up Go tip
@@ -51,7 +51,7 @@ jobs:
           echo Failure
 
   notify_success:
-    needs: [merge-gatekeeper]
+    needs: [check]
     runs-on: ubuntu-22.04
     steps:
       - name: Set up Go tip
